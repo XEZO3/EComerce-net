@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.utility;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,5 +25,14 @@ namespace CV.DAL.Data
         DbSet<Roles> roles { get; set; }
         DbSet<Permessions> permessions { get; set; }
         DbSet<RolesPermission> rolesPermissions { get; set; }
+        DbSet<Category> category { get; set; }
+        DbSet<Brands> brands { get; set; }
+        DbSet<Products> products { get; set; }
+        DbSet<OrderStates> orderStates { get; set; }
+        DbSet<ProductState> productState { get; set; }
+        DbSet<Customer> customers { get; set; }
+        DbSet<OrderItem> orderItems { get; set; }
+        DbSet<Order> orders { get; set; }
+       
     }
 }

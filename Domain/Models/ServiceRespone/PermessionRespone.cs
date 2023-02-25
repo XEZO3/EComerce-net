@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.ServiceRespone
 {
-    public class PermessionRespone
+    public class PermessionRespone:Main
     {
-        public int Id { get; set; }
+        
         public string PermissionName { get; set; }
     }
 }

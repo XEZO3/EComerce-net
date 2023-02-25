@@ -18,66 +18,61 @@ namespace EC.Service.Service
         private readonly IPermessionRepository _permession;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-       
+        private ServiceRespone<PermessionRespone> PermessionObj { get; set; }
+        private ServiceRespone<IEnumerable<PermessionRespone>> PermessionList { get; set; }
+
         public PermessionService(IPermessionRepository permession, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _permession = permession;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-           
+            PermessionObj = new ServiceRespone<PermessionRespone>() { returnCode = Convert.ToString(codes.ok)};
+            PermessionList = new ServiceRespone<IEnumerable<PermessionRespone>>() { returnCode = Convert.ToString(codes.ok) };
+
         }
         public async Task<ServiceRespone<PermessionRespone>> Add(Permessions entity)
-        {
-            ServiceRespone<PermessionRespone> result = new ServiceRespone<PermessionRespone>();
+        {            
             var permession = await _permession.Add(entity);
             _unitOfWork.Save();
-            result.result = _mapper.Map<PermessionRespone>(permession);
-            result.returnCode = Convert.ToString(codes.ok);
-            return result;
+            PermessionObj.result = _mapper.Map<PermessionRespone>(permession);                      
+            return PermessionObj;
         }
 
         public ServiceRespone<PermessionRespone> Delete(Permessions entity)
         {
-            ServiceRespone<PermessionRespone> result = new ServiceRespone<PermessionRespone>();            
-            result.returnCode = Convert.ToString(codes.ok);
-            return result;
+            _permession.Delete(entity);
+            _unitOfWork.Save();            
+            return PermessionObj;
         }
 
         public async Task<ServiceRespone<PermessionRespone>> FirstOrDefult(Expression<Func<Permessions, bool>> predicate = null)
-        {
-            ServiceRespone<PermessionRespone> result = new ServiceRespone<PermessionRespone>();
+        {           
             var permession = await _permession.FirstOrDefult(predicate);
-            result.result = _mapper.Map<PermessionRespone>(permession);
-            result.returnCode = Convert.ToString(codes.ok);
-            return result;
+            PermessionObj.result= _mapper.Map<PermessionRespone>(permession);            
+            return PermessionObj;
         }
 
         public async Task<ServiceRespone<IEnumerable<PermessionRespone>>> GetAll(Expression<Func<Permessions, bool>> predicate = null)
-        {
-            ServiceRespone<IEnumerable<PermessionRespone>> result = new ServiceRespone<IEnumerable<PermessionRespone>>();
+        {           
             var permession = await _permession.GetAll(predicate);
-            result.result = _mapper.Map<List<PermessionRespone>>(permession);
-            result.returnCode = Convert.ToString(codes.ok);
-            return result;
+            PermessionList.result = _mapper.Map<List<PermessionRespone>>(permession);           
+            return PermessionList;
         }
 
         public async Task<ServiceRespone<PermessionRespone>> GetById(int Id)
         {
-            ServiceRespone<PermessionRespone> result = new ServiceRespone<PermessionRespone>();
+           
             var permession = await _permession.GetById(Id);
-            result.result = _mapper.Map<PermessionRespone>(permession);
-            result.returnCode = Convert.ToString(codes.ok);
-            return result;
+            PermessionObj.result = _mapper.Map<PermessionRespone>(permession);
+            return PermessionObj;
         }
 
         public ServiceRespone<PermessionRespone> Update(Permessions entity)
-        {
-            ServiceRespone<PermessionRespone> result = new ServiceRespone<PermessionRespone>();
+        {         
             var permession =  _permession.Update(entity);
             _unitOfWork.Save();
-            result.result = _mapper.Map<PermessionRespone>(permession);
-            result.returnCode = Convert.ToString(codes.ok);
-            return result;
+            PermessionObj.result = _mapper.Map<PermessionRespone>(permession);         
+            return PermessionObj;
         }
     }
 }

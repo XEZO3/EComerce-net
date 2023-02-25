@@ -19,7 +19,8 @@ namespace EC.Service.Service
         private readonly IRolePermessionRepository _rolePermessionRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        private ServiceRespone<Roles> RoleObj { get; set; }
+        private ServiceRespone<IEnumerable<Roles>> RoleList { get; set; }
         public RoleService(IRoleRepository role, IUnitOfWork unitOfWork, IMapper mapper, IRolePermessionRepository rolePermessionRepository)
         {
             
@@ -27,46 +28,49 @@ namespace EC.Service.Service
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _rolePermessionRepository = rolePermessionRepository;
+            RoleObj = new ServiceRespone<Roles>() { returnCode = Convert.ToString(codes.ok) };
+            RoleList = new ServiceRespone<IEnumerable<Roles>>() { returnCode = Convert.ToString(codes.ok) };
         }
         public async Task<ServiceRespone<Roles>> Add(Roles entity)
-        {
-            ServiceRespone<Domain.Models.Roles> result = new ServiceRespone<Roles>();
-            result.returnCode = Convert.ToString(codes.ok);
-            result.result = await _Role.Add(entity);
+        {     
+            RoleObj.result = await _Role.Add(entity);
             _unitOfWork.Save();
-            return result;
+            return RoleObj;
         }
 
        
 
         public ServiceRespone<Roles> Delete(Roles entity)
         {
-            throw new NotImplementedException();
+             _Role.Delete(entity);
+            _unitOfWork.Save();
+            return RoleObj;
         }
 
        
 
-        public Task<ServiceRespone<Roles>> FirstOrDefult(Expression<Func<Roles, bool>> predicate = null)
+        public async Task<ServiceRespone<Roles>> FirstOrDefult(Expression<Func<Roles, bool>> predicate = null)
         {
-
-            throw new NotImplementedException();
+            RoleObj.result = await _Role.FirstOrDefult(predicate);          
+            return RoleObj;
         }
 
       
 
         public async Task<ServiceRespone<IEnumerable<Roles>>> GetAll(Expression<Func<Roles, bool>> predicate = null)
         {
-            ServiceRespone<IEnumerable<Roles>> result = new ServiceRespone<IEnumerable<Roles>>();
-            result.returnCode = Convert.ToString(codes.ok);
-            result.result = await _Role.GetAll(predicate);
-            return result;
+            
+           
+           RoleList.result = await _Role.GetAll(predicate);
+            return RoleList;
            
         }
 
        
-        public Task<ServiceRespone<Roles>> GetById(int Id)
+        public async Task<ServiceRespone<Roles>> GetById(int Id)
         {
-            throw new NotImplementedException();
+            RoleObj.result = await _Role.GetById(Id);
+            return RoleObj;
         }
 
         public List<Permessions> GetPermessionForRule(int RoleId)
@@ -85,7 +89,9 @@ namespace EC.Service.Service
 
         public ServiceRespone<Roles> Update(Roles entity)
         {
-            throw new NotImplementedException();
+            RoleObj.result = _Role.Update(entity);
+            _unitOfWork.Save();
+            return RoleObj;
         }
 
        

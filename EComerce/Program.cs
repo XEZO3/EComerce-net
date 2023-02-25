@@ -46,7 +46,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+});
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -56,7 +61,7 @@ app.Use(async (context, next) =>
 {
     // Do work that can write to the Response.
     context.Request.Headers.TryGetValue("lang", out StringValues lang);
-    GetCurrentLanguages.CurrentLang = lang;
+    GetCurrentLanguages.CurrentLang = "ar";
     await next.Invoke();
     // Do logging or other work that doesn't write to the Response.
 });

@@ -20,7 +20,8 @@ namespace EComerce.Common.Extention
             builder.Services.AddScoped<IRolePermessionRepository, RolePermessionRepository>();
             builder.Services.AddScoped<IRoleService, RoleService>();
             builder.Services.AddScoped<IPermessionService, PermessionService>();
-
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
             return builder.Services;
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.IService
 {
-    public interface IRoleService:IService<Roles, Roles>
+    public interface IRoleService:IService<Roles, Roles, Roles>
     {
         void SetPermessionForRule(int RoleId,int PermessionId);
         List<Permessions> GetPermessionForRule(int RoleId);

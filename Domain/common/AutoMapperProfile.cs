@@ -19,7 +19,10 @@ namespace Domain.common
             CreateMap<RegisterDto, Users>();
             CreateMap<LoginDto, Users>();
             CreateMap<Permessions, PermessionRespone>();
-
+            CreateMap<Category, CategoryRespone>();
+            CreateMap<CategoryDto, Category>();
+            CreateMap<Products, ProductRespone>();
+            CreateMap<ProductDto, Products>();
         }
     }
 }

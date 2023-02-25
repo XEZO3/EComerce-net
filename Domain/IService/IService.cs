@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Domain.IService
 {
-    public interface IService<T,TResp>  where TResp : class 
+    public interface IService<T,TResp,TDto>  where TResp : class 
     {
-        Task<ServiceRespone<TResp>> Add(T entity);
+        Task<ServiceRespone<TResp>> Add(TDto entity);
         ServiceRespone<TResp> Delete(T entity);
-        ServiceRespone<TResp> Update(T entity);
+        ServiceRespone<TResp> Update(TDto entity);
 
         Task<ServiceRespone<IEnumerable<TResp>>> GetAll(Expression<Func<T, bool>> predicate = null);
 

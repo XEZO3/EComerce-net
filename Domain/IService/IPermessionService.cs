@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.IService
 {
-    public interface IPermessionService:IService<Permessions, PermessionRespone>
+    public interface IPermessionService:IService<Permessions, PermessionRespone, Permessions>
     {
     }
 }

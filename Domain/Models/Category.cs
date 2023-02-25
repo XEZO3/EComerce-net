@@ -12,7 +12,13 @@ namespace Domain.Models
         
         public string NameAr { get; set; }
         public string NameEn { get; set; }
+        public string DescriptionAr { get; set; }
+        public string DescriptionEn { get; set; }
+        public string Image { get; set; }
+        public bool IsAvailable { get; set; }
         [NotMapped]
         public string Name { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? NameAr : NameEn; } }
+        [NotMapped]
+        public string Description { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? DescriptionAr : DescriptionEn; } }
     }
 }

@@ -16,8 +16,8 @@ namespace EComerce.Controllers
             _roleService = roleService;
         }
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll() {
-          var result= await _roleService.GetAll();
+        public async Task<IActionResult> GetAll([FromQuery]string? RoleName) {
+          var result= await _roleService.GetAll(predicate:x=>x.RoleName.Contains(RoleName)||RoleName==null);
             return Ok(result);
         }
         [HttpPost("Add")]

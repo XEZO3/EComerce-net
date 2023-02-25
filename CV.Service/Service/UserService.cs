@@ -17,45 +17,57 @@ namespace EC.Service.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
+        private ServiceRespone<UsersRespone> UserObj { get; set; }
+        private ServiceRespone<IEnumerable<UsersRespone>> UserList { get; set; }
         public UserService(IUserRepository user, IUnitOfWork unitOfWork, IMapper mapper, ITokenService tokenService)
         {
             _user = user;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _tokenService = tokenService;
+            UserObj = new ServiceRespone<UsersRespone>() { returnCode = Convert.ToString(codes.ok) };
+            UserList = new ServiceRespone<IEnumerable<UsersRespone>>() { returnCode = Convert.ToString(codes.ok) };
         }
 
         public async Task<ServiceRespone<UsersRespone>> Add(Users entity)
         {
-            ServiceRespone<UsersRespone> respone = new ServiceRespone<UsersRespone>();
-            respone.returnCode = Convert.ToString(codes.ok);
+           
             var user = await _user.Add(entity);
             _unitOfWork.Save();
-            var maped =_mapper.Map<UsersRespone>(user);
-            respone.result = maped;
-            return respone;
+            UserObj.result =_mapper.Map<UsersRespone>(user);
+           
+            return UserObj;
         }
 
         public ServiceRespone<UsersRespone> Delete(Users entity)
         {
-            throw new NotImplementedException();
+             _user.Delete(entity);
+            _unitOfWork.Save();
+            return UserObj;
         }
 
-        public Task<ServiceRespone<UsersRespone>> FirstOrDefult(Expression<Func<Users, bool>> predicate = null)
+        public async Task<ServiceRespone<UsersRespone>> FirstOrDefult(Expression<Func<Users, bool>> predicate = null)
         {
-            throw new NotImplementedException();
+            var user = await _user.FirstOrDefult(predicate);  
+            UserObj.result = _mapper.Map<UsersRespone>(user);
+            return UserObj;
         }
 
         
 
-        public Task<ServiceRespone<IEnumerable<UsersRespone>>> GetAll(Expression<Func<Users, bool>> predicate = null)
+        public async Task<ServiceRespone<IEnumerable<UsersRespone>>> GetAll(Expression<Func<Users, bool>> predicate = null)
         {
-            throw new NotImplementedException();
+           var Users = await _user.GetAll(predicate, new List<Expression<Func<Users, Object>>> {
+                        { m => m.Roles} });
+            UserList.result = _mapper.Map<IEnumerable<UsersRespone>>(Users);
+            return UserList;
         }
 
-        public Task<ServiceRespone<UsersRespone>> GetById(int Id)
+        public async Task<ServiceRespone<UsersRespone>> GetById(int Id)
         {
-            throw new NotImplementedException();
+            var user = await _user.GetById(Id);
+            UserObj.result = _mapper.Map<UsersRespone>(user);
+            return UserObj;
         }
 
         public async Task<ServiceRespone<LoginRespone>> Login(LoginDto login)
@@ -86,28 +98,31 @@ namespace EC.Service.Service
         public async Task<ServiceRespone<UsersRespone>> Register(RegisterDto register)
         {
             byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
-            ServiceRespone<UsersRespone> respone = new ServiceRespone<UsersRespone>();
+            
             var user = _user.GetByEmail(register.Email);
             if (user != null)
             {
-                respone.errorMsg = "Email is already taken";
-                respone.returnCode = Convert.ToString(codes.ok);
+                UserObj.errorMsg = "Email is already taken";
+                
             }
             else { 
                 Users mapedUser = _mapper.Map<Users>(register);
                 mapedUser.Password = GeneratePassword(register.Password,salt);
                 mapedUser.salt= salt;
                 await _user.Add(mapedUser);
-                _unitOfWork.Save();
-                respone.returnCode = Convert.ToString(codes.ok);
-                respone.result = _mapper.Map<UsersRespone>(mapedUser);
+                _unitOfWork.Save();               
+                UserObj.result = _mapper.Map<UsersRespone>(mapedUser);
             }
-            return respone;
+            return UserObj;
         }
 
         public ServiceRespone<UsersRespone> Update(Users entity)
         {
-            throw new NotImplementedException();
+            var user =  _user.Update(entity);
+            _unitOfWork.Save();
+            UserObj.result = _mapper.Map<UsersRespone>(user);
+
+            return UserObj;
         }
         
         public string GeneratePassword(string password, byte[] salt)
