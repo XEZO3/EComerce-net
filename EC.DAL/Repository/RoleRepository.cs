@@ -20,6 +20,8 @@ namespace EC.DAL.Repository
             _dbSet = context.Set<Roles>();
         }
 
+       
+
         public int GetIdByName(string RoleName)
         {
             return _dbSet.FirstOrDefault(x=>x.RoleName==RoleName).Id;

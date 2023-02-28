@@ -38,7 +38,13 @@ namespace EC.Service.Service
            
             return UserObj;
         }
-
+        public async Task<ServiceRespone<UsersRespone>> DeleteById(int Id)
+        {
+            var user = await _user.GetById(Id);
+            _user.Delete(user);
+            _unitOfWork.Save();
+            return UserObj;
+        }
         public ServiceRespone<UsersRespone> Delete(Users entity)
         {
              _user.Delete(entity);
@@ -48,7 +54,8 @@ namespace EC.Service.Service
 
         public async Task<ServiceRespone<UsersRespone>> FirstOrDefult(Expression<Func<Users, bool>> predicate = null)
         {
-            var user = await _user.FirstOrDefult(predicate);  
+            var user = await _user.FirstOrDefult(predicate, new List<Expression<Func<Users, Object>>> {
+                        { m => m.Roles} });  
             UserObj.result = _mapper.Map<UsersRespone>(user);
             return UserObj;
         }
@@ -116,8 +123,17 @@ namespace EC.Service.Service
             return UserObj;
         }
 
-        public ServiceRespone<UsersRespone> Update(Users entity)
+        public  ServiceRespone<UsersRespone> Update(Users entity)
         {
+            if (entity.Password != "")
+            {
+                byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+                var password = entity.Password;
+                var passwordhashed = GeneratePassword(password, salt);
+                entity.Password = passwordhashed;
+                entity.salt = salt;
+            }
+              
             var user =  _user.Update(entity);
             _unitOfWork.Save();
             UserObj.result = _mapper.Map<UsersRespone>(user);
@@ -135,5 +151,7 @@ namespace EC.Service.Service
             numBytesRequested: 256 / 8));
             return hashed;
         }
+
+        
     }
 }

@@ -8,7 +8,7 @@ namespace Domain.Models.ServiceRespone
 {
     public class PermessionRespone:Main
     {
-        
+ 
         public string PermissionName { get; set; }
     }
 }

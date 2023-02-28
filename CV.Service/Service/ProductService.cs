@@ -73,5 +73,13 @@ namespace EC.Service.Service
             ProductObj.result = _mapper.Map<ProductRespone>(product);
             return ProductObj;
         }
+
+        public async Task<ServiceRespone<ProductRespone>> DeleteById(int Id)
+        {
+            var obj = await _productRepository.GetById(Id);
+            _productRepository.Delete(obj);
+            _unitOfWork.Save();
+            return ProductObj;
+        }
     }
 }

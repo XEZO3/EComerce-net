@@ -11,5 +11,6 @@ namespace Domain.IService
     {
         void SetPermessionForRule(int RoleId,int PermessionId);
         List<Permessions> GetPermessionForRule(int RoleId);
+        void DeleteRolePermession(int RoleId, int PermessionId);
     }
 }

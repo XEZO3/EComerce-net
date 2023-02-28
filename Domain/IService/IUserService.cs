@@ -13,6 +13,7 @@ namespace Domain.IService
     {
         Task<ServiceRespone<LoginRespone>> Login(LoginDto login);
         Task<ServiceRespone<UsersRespone>> Register(RegisterDto register);
+        //Task<ServiceRespone<UsersRespone>> DeleteById(int Id);
         string GeneratePassword(string password, byte[] salt);
     }
 }

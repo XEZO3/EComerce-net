@@ -75,5 +75,13 @@ namespace EC.Service.Service
             Order.result = order;
             return Order;
         }
+
+        public async Task<ServiceRespone<Order>> DeleteById(int Id)
+        {
+            var obj = await _orderRepository.GetById(Id);
+            _orderRepository.Delete(obj);
+            _unitOfWork.Save();
+            return Order;
+        }
     }
 }

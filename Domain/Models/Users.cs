@@ -10,6 +10,7 @@ namespace Domain.Models
     public class Users:Main
     {
         public string Name { get; set; }
+        
         public string Email { get; set; }
         public string Password { get; set; }
         public byte[] salt { get; set; }

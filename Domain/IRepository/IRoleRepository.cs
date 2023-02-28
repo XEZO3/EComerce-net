@@ -10,5 +10,6 @@ namespace Domain.IRepository
     public interface IRoleRepository :IReopsitory<Roles>
     {
         int GetIdByName(string RoleName);
+        
     }
 }

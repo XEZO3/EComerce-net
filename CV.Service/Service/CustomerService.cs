@@ -59,5 +59,10 @@ namespace EC.Service.Service
         {
             throw new NotImplementedException();
         }
+
+        public Task<ServiceRespone<Customer>> DeleteById(int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

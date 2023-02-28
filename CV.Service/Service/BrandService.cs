@@ -73,5 +73,13 @@ namespace EC.Service.Service
             Brands.result = brand;
             return Brands;
         }
+
+        public async Task<ServiceRespone<Brands>> DeleteById(int Id)
+        {
+            var obj = await _brandRepository.GetById(Id);
+            _brandRepository.Delete(obj);
+            _unitOfWork.Save();
+            return Brands;
+        }
     }
 }

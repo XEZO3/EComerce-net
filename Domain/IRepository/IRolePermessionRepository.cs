@@ -10,5 +10,6 @@ namespace Domain.IRepository
     public interface IRolePermessionRepository:IReopsitory<RolesPermission>
     {
         List<Permessions> GetPermessionForRole(int RoleId);
+        void DeleteRolePermession(int RoleId, int PermessionId);
     }
 }

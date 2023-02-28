@@ -74,5 +74,13 @@ namespace EC.Service.Service
             PermessionObj.result = _mapper.Map<PermessionRespone>(permession);         
             return PermessionObj;
         }
+
+        public async Task<ServiceRespone<PermessionRespone>> DeleteById(int Id)
+        {
+            var obj = await _permession.GetById(Id);
+            _permession.Delete(obj);
+            _unitOfWork.Save();
+            return PermessionObj;
+        }
     }
 }

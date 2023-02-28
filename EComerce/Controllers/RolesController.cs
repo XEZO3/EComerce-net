@@ -26,16 +26,25 @@ namespace EComerce.Controllers
             var result = await _roleService.Add(role);
             return Ok(result);
         }
-        [HttpPost("RolePermessions")]
-        public  IActionResult GetPermessionForRule([FromBody] int RoleId)
+        [HttpGet("RolePermessions/{Id}")]
+        public  IActionResult GetPermessionForRule(int Id)
         {
-            var result =  _roleService.GetPermessionForRule(RoleId);
+            var result =  _roleService.GetPermessionForRule(Id);
             return Ok(result);
         }
         [HttpPost("SetPermession")]
         public IActionResult SetPermessionForRule([FromBody] AddRolePermessionDto ARP)
         {
              _roleService.SetPermessionForRule(ARP.RoleId, ARP.PermessionId);
+            return Ok();
+        }
+        [HttpDelete("Delete/{Id}")]
+        public async Task<IActionResult> Delete(int Id) {
+            return Ok(await _roleService.DeleteById(Id));
+        }
+        [HttpDelete("Delete/{RoleId}/{PermessionId}")]
+        public async Task<IActionResult> DeleteRolePermession(int RoleId,int PermessionId) {
+            _roleService.DeleteRolePermession(RoleId, PermessionId);
             return Ok();
         }
     }

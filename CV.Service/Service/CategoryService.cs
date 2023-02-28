@@ -63,5 +63,12 @@ namespace EC.Service.Service
         {
             throw new NotImplementedException();
         }
+
+        public async Task<ServiceRespone<CategoryRespone>> DeleteById(int Id)
+        {
+            var obj = await _categoryRepository.GetById(Id);
+            _categoryRepository.Delete(obj);
+            return category;
+        }
     }
 }

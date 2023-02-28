@@ -33,7 +33,7 @@ namespace EComerce.ActionFilter
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string RoleName = jwt.Claims.First(c => c.Type == "role").Value;
             var action = context.RouteData.Values.Values.ToList();
-            string actionName = action[0].ToString();
+            string actionName =action[1].ToString()+"."+action[0].ToString();
             var roleId =  _roleRepository.GetIdByName(RoleName);
 
             List<Permessions> permessions = _rolePermessionRepository.GetPermessionForRole(roleId).ToList();

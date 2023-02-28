@@ -15,7 +15,7 @@ namespace Domain.IService
         ServiceRespone<TResp> Update(TDto entity);
 
         Task<ServiceRespone<IEnumerable<TResp>>> GetAll(Expression<Func<T, bool>> predicate = null);
-
+        Task<ServiceRespone<TResp>> DeleteById(int Id);
         Task<ServiceRespone<TResp>> FirstOrDefult(Expression<Func<T, bool>> predicate = null);
 
         Task<ServiceRespone<TResp>> GetById(int Id);

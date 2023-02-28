@@ -80,12 +80,18 @@ namespace EC.Service.Service
 
         public void SetPermessionForRule(int RoleId, int PermessionId)
         {
-            RolesPermission rolesPermission = new RolesPermission();
-            rolesPermission.RolesId = RoleId;
-            rolesPermission.PermessionsId = PermessionId;
-            _rolePermessionRepository.Add(rolesPermission);
-            _unitOfWork.Save();
-        }
+            var check = _rolePermessionRepository.GetPermessionForRole(RoleId);
+            if (check.FirstOrDefault(x => x.Id == PermessionId) == null)
+            {
+
+                RolesPermission rolesPermission = new RolesPermission();
+                rolesPermission.RolesId = RoleId;
+                rolesPermission.PermessionsId = PermessionId;
+                _rolePermessionRepository.Add(rolesPermission);
+                _unitOfWork.Save();
+            }
+            
+    }
 
         public ServiceRespone<Roles> Update(Roles entity)
         {
@@ -94,8 +100,18 @@ namespace EC.Service.Service
             return RoleObj;
         }
 
-       
-
-       
+        public async Task<ServiceRespone<Roles>> DeleteById(int Id)
+        {
+            var obj = await _Role.GetById(Id);
+            _Role.Delete(obj);
+            _unitOfWork.Save();
+            return RoleObj;
+        }        
+        public void DeleteRolePermession(int RoleId, int PermessionId)
+        {
+            _rolePermessionRepository.DeleteRolePermession(RoleId, PermessionId);
+            _unitOfWork.Save();
+            
+        }
     }
 }

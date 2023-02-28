@@ -28,6 +28,10 @@ namespace EC.DAL.Repository
             return user;
         }
 
-        
+        public Users GetByIdNotAsync(int Id)
+        {
+            var user = _dbSet.Find(Id);
+            return user;
+        }
     }
 }

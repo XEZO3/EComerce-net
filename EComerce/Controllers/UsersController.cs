@@ -1,4 +1,5 @@
-﻿using Domain.IService;
+﻿using AutoMapper;
+using Domain.IService;
 using Domain.Models;
 using Domain.Models.Dto;
 using Domain.Models.filters;
@@ -12,9 +13,11 @@ namespace EComerce.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UsersController(IUserService userService)
+        private readonly   IMapper _mapper;
+        public UsersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterDto user) {
@@ -35,7 +38,16 @@ namespace EComerce.Controllers
         [HttpGet("GetById/{Id}")]
         public async Task<IActionResult> GetById(int Id) {
 
-            return Ok(await _userService.GetById(Id));
+            return Ok(await _userService.FirstOrDefult(x=>x.Id == Id));
+        }
+        [HttpPut("Update")]
+        public  IActionResult Update([FromBody] Users user) {
+
+            return Ok( _userService.Update(user));
+        }
+        [HttpDelete("Delete/{Id}")]
+        public async Task<IActionResult> Delete(int Id) {
+            return Ok( await _userService.DeleteById(Id));
         }
     }
 }

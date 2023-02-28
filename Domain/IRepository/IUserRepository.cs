@@ -12,5 +12,6 @@ namespace Domain.IRepository
     {
         
         Users GetByEmail (string email);
+        Users GetByIdNotAsync(int Id);
     }
 }

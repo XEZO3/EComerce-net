@@ -1,6 +1,7 @@
 ﻿using Domain.IService;
 using Domain.Models;
 using Domain.Models.Dto;
+using Domain.Models.filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,9 @@ namespace EComerce.Controllers
         {
             _categoryService = categoryService;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAll() {
-            var data = await _categoryService.GetAll();
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll([FromQuery]CategoryFilter filter) {
+            var data = await _categoryService.GetAll(predicate:x=>(x.NameEn.Contains(filter.Name) || x.NameAr.Contains(filter.Name) || filter.Name==null));
             return Ok(data);
         }
         [HttpPost]

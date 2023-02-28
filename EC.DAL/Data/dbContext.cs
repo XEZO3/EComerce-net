@@ -20,7 +20,16 @@ namespace CV.DAL.Data
             //LAPTOP-NNUMAB6J
             builder.UseSqlServer("Server=DESKTOP-JD76U9C;Database=Ecom;Trusted_Connection=True;Trust Server Certificate=true;");
         }
-        
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Users>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+            builder.Entity<Permessions>().HasIndex(u=>u.PermissionName).IsUnique();
+            builder.Entity<Roles>().HasIndex(u => u.RoleName).IsUnique();
+        }
+
+
         DbSet<Users> Users { get; set; }
         DbSet<Roles> roles { get; set; }
         DbSet<Permessions> permessions { get; set; }

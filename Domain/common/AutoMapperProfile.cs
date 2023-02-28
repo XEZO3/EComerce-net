@@ -17,6 +17,7 @@ namespace Domain.common
             
             CreateMap<Users, UsersRespone>();
             CreateMap<RegisterDto, Users>();
+           
             CreateMap<LoginDto, Users>();
             CreateMap<Permessions, PermessionRespone>();
             CreateMap<Category, CategoryRespone>();
