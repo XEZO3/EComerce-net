@@ -61,7 +61,7 @@ app.Use(async (context, next) =>
 {
     // Do work that can write to the Response.
     context.Request.Headers.TryGetValue("lang", out StringValues lang);
-    GetCurrentLanguages.CurrentLang = "ar";
+    GetCurrentLanguages.CurrentLang = "en";
     await next.Invoke();
     // Do logging or other work that doesn't write to the Response.
 });

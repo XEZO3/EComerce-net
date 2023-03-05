@@ -66,7 +66,7 @@ namespace EC.Service.Service
             return Brands;
         }
 
-        public ServiceRespone<Brands> Update(BrandDto entity)
+        public ServiceRespone<Brands> Update(Brands entity)
         {
             var brand =  _brandRepository.Update(_mapper.Map<Brands>(entity));
             _unitOfWork.Save();

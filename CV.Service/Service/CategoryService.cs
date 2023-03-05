@@ -54,20 +54,24 @@ namespace EC.Service.Service
             //throw new NotImplementedException();
         }
 
-        public Task<ServiceRespone<CategoryRespone>> GetById(int Id)
+        public async Task<ServiceRespone<CategoryRespone>> GetById(int Id)
         {
-            throw new NotImplementedException();
+            category.result = _mapper.Map<CategoryRespone>(await _categoryRepository.GetById(Id));
+            return category;
         }
 
-        public ServiceRespone<CategoryRespone> Update(CategoryDto entity)
+        public ServiceRespone<CategoryRespone> Update(Category entity)
         {
-            throw new NotImplementedException();
+            category.result = _mapper.Map<CategoryRespone>(_categoryRepository.Update(entity));
+            _unitOfWork.Save();
+            return category;
         }
 
         public async Task<ServiceRespone<CategoryRespone>> DeleteById(int Id)
         {
             var obj = await _categoryRepository.GetById(Id);
             _categoryRepository.Delete(obj);
+            _unitOfWork.Save();
             return category;
         }
     }

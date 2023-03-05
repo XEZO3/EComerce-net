@@ -67,7 +67,7 @@ namespace EC.Service.Service
             return ProductObj;
         }
 
-        public ServiceRespone<ProductRespone> Update(ProductDto entity)
+        public ServiceRespone<ProductRespone> Update(Products entity)
         {
             var product =  _productRepository.Update(_mapper.Map<Products>(entity));
             ProductObj.result = _mapper.Map<ProductRespone>(product);

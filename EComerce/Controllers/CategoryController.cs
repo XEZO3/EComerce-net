@@ -18,10 +18,10 @@ namespace EComerce.Controllers
         }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery]CategoryFilter filter) {
-            var data = await _categoryService.GetAll(predicate:x=>(x.NameEn.Contains(filter.Name) || x.NameAr.Contains(filter.Name) || filter.Name==null));
+            var data = await _categoryService.GetAll(predicate:x=>(x.NameEn.Contains(filter.Name) || x.NameAr.Contains(filter.Name) || filter.Name == null) &&(x.DescriptionAr.Contains(filter.Description) || x.DescriptionEn.Contains(filter.Description)|| filter.Description == null));
             return Ok(data);
         }
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> Add([FromBody] CategoryDto category)
         {
             var data = await _categoryService.Add(category);
@@ -32,6 +32,21 @@ namespace EComerce.Controllers
         {
             var data = await _categoryService.FirstOrDefult();
             return Ok(data);
+        }
+        [HttpGet("GetById/{Id}")]
+
+        public async Task<IActionResult> GetById(int Id) {
+            return Ok(await _categoryService.GetById(Id));
+        }
+        [HttpPut("Update")]
+        public  IActionResult Update(Category category)
+        {
+            return Ok(_categoryService.Update(category));
+        }
+        [HttpDelete("Delete/{Id}")]
+        public async Task<IActionResult> Delete(int Id) {
+            return Ok(await _categoryService.DeleteById(Id));
+        
         }
     }
 }

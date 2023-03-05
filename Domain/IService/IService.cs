@@ -12,7 +12,7 @@ namespace Domain.IService
     {
         Task<ServiceRespone<TResp>> Add(TDto entity);
         ServiceRespone<TResp> Delete(T entity);
-        ServiceRespone<TResp> Update(TDto entity);
+        ServiceRespone<TResp> Update(T entity);
 
         Task<ServiceRespone<IEnumerable<TResp>>> GetAll(Expression<Func<T, bool>> predicate = null);
         Task<ServiceRespone<TResp>> DeleteById(int Id);

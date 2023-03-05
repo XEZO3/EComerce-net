@@ -68,7 +68,7 @@ namespace EC.Service.Service
             return Order;
         }
 
-        public ServiceRespone<Order> Update(OrderDto entity)
+        public ServiceRespone<Order> Update(Order entity)
         {
             var order =  _orderRepository.Update(_mapper.Map<Order>(entity));
             _unitOfWork.Save();
