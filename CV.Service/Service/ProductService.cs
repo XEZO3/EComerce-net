@@ -48,14 +48,20 @@ namespace EC.Service.Service
 
         public async Task<ServiceRespone<ProductRespone>> FirstOrDefult(Expression<Func<Products, bool>> predicate = null)
         {
-            var product = await _productRepository.FirstOrDefult(predicate);            
+            var product = await _productRepository.FirstOrDefult(predicate, new List<Expression<Func<Products, Object>>> {
+                        { m => m.Category},
+                        { m => m.brands}
+            });            
             ProductObj.result = _mapper.Map<ProductRespone>(product);
             return ProductObj;
         }
 
         public async Task<ServiceRespone<IEnumerable<ProductRespone>>> GetAll(Expression<Func<Products, bool>> predicate = null)
         {
-            var product = await _productRepository.GetAll(predicate);
+            var product = await _productRepository.GetAll(predicate, new List<Expression<Func<Products, Object>>> {
+                        { m => m.Category},
+                        { m => m.brands}
+            });
             ProductList.result = _mapper.Map<List<ProductRespone>>(product);
             return ProductList;
         }

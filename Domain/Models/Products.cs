@@ -21,15 +21,13 @@ namespace Domain.Models
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         [ForeignKey("Brands")]
-        public int BrandsId { get; set; }
-        [Column("Avilability")]
-        [ForeignKey("ProductState")]
-        public int ProductStateId { get; set; }
+        public int BrandsId { get; set; }      
+        public string Avilability { get; set; }
         [NotMapped]
         public string Name { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? NameAr : NameEn; } }
         [NotMapped]
         public string Description { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? DescriptionAr : DescriptionEn; } }
-        public Brands brands { get; set; }
-        public Category Category { get; set; }
+        public Brands? brands { get; set; }
+        public Category? Category { get; set; }
     }
 }
