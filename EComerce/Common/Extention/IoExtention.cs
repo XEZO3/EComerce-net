@@ -26,6 +26,7 @@ namespace EComerce.Common.Extention
             builder.Services.AddScoped<IBrandService, BrandService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IFileService, FilesService>();
             return builder.Services;
         }
     }

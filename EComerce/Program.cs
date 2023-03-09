@@ -22,7 +22,7 @@ builder.Services.AddDbContext<dbContext>(options =>
 });
 builder.Services.AddAutoMapper(typeof(Users));
 builder.Services.AddScoped<ValidationFilter>();
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt => {
