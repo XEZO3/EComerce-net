@@ -17,8 +17,8 @@ namespace Domain.Models
         public string Image { get; set; }
         public bool IsAvailable { get; set; }
         [NotMapped]
-        public string Name { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? NameAr : NameEn; } }
+        public string? Name { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? NameAr : NameEn; } }
         [NotMapped]
-        public string Description { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? DescriptionAr : DescriptionEn; } }
+        public string? Description { get { return GetCurrentLanguages.GetCurrentLang() == "ar" ? DescriptionAr : DescriptionEn; } }
     }
 }

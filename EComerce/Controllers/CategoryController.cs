@@ -20,7 +20,7 @@ namespace EComerce.Controllers
         }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery]CategoryFilter filter) {
-            var data = await _categoryService.GetAll(predicate:x=>(x.NameEn.Contains(filter.Name) || x.NameAr.Contains(filter.Name) || filter.Name == null) &&(x.DescriptionAr.Contains(filter.Description) || x.DescriptionEn.Contains(filter.Description)|| filter.Description == null));
+            var data = await _categoryService.GetAll(predicate:x=>(x.NameEn.Contains(filter.Name) || x.NameAr.Contains(filter.Name) || filter.Name == null) &&(x.DescriptionAr.Contains(filter.Description) || x.DescriptionEn.Contains(filter.Description)|| filter.Description == null)&& (x.IsAvailable == filter.IsAvailable || filter.IsAvailable == null));
             return Ok(data);
         }
         [HttpPost("Add")]
@@ -43,8 +43,13 @@ namespace EComerce.Controllers
             return Ok(await _categoryService.GetById(Id));
         }
         [HttpPut("Update")]
-        public  IActionResult Update(Category category)
+        public  IActionResult Update([FromForm]Category category)
         {
+            if (category.Image == "empty")
+            {
+                var file = Request.Form.Files;
+                category.Image = _fileService.uploadfile(file);
+            }
             return Ok(_categoryService.Update(category));
         }
         [HttpDelete("Delete/{Id}")]

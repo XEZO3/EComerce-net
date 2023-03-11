@@ -31,7 +31,12 @@ namespace EComerce.Controllers
             return Ok(await _productService.FirstOrDefult(predicate: x => x.Id == Id));
         }
         [HttpPut("Update")]
-        public IActionResult Update(Products product) { 
+        public IActionResult Update([FromForm]Products product) {
+            if (product.Image == "empty")
+            {
+                var file = Request.Form.Files;
+                product.Image = _fileService.uploadfile(file);
+            }
             return Ok(_productService.Update(product));
         }
         [HttpPost("Add")]
