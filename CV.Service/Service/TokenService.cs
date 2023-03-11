@@ -28,6 +28,7 @@ namespace EC.Service.Service
                 //new Claim(ClaimTypes.NameIdentifier,user.Password),
                 new Claim(ClaimTypes.Role,user.Roles.RoleName),
                 new Claim("Id",Convert.ToString(user.Id)),
+                new Claim("CustomerId",Convert.ToString(user.Customer.Id)),
                 //new Claim(ClaimTypes.Role,user.Role),
                 };
           

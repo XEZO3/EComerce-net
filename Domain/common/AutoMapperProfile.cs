@@ -24,6 +24,9 @@ namespace Domain.common
             CreateMap<Products, ProductRespone>();
             CreateMap<ProductDto, Products>();
             CreateMap<BrandDto, Brands>();
+            CreateMap<OrderDto, Order>();
+            CreateMap<OrderItemDto, OrderItem>();
+            CreateMap<CustomerDto, Customer>();
         }
     }
 }

@@ -14,8 +14,15 @@ namespace Domain.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public byte[] salt { get; set; }
+        public Customer? Customer { get; set; }
         [ForeignKey("Roles")]
         public int RoleId { get; set; } 
         public Roles Roles { get; set; }
+       
+        public Users()
+        {
+            this.Customer = new Customer();
+
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace EC.DAL.Repository
         public Users GetByEmail(string email)
         {
            
-           var user = _dbSet.Include(x=>x.Roles).FirstOrDefault(x => x.Email == email);
+           var user = _dbSet.Include(x=>x.Roles).Include(z=>z.Customer).FirstOrDefault(x => x.Email == email);
             return user;
         }
 

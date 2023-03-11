@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -37,6 +40,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthentication();
 builder.RegisterServices();
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
 
@@ -57,11 +62,34 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseStaticFiles();
+
 app.Use(async (context, next) =>
 {
     // Do work that can write to the Response.
     context.Request.Headers.TryGetValue("lang", out StringValues lang);
     GetCurrentLanguages.CurrentLang = "en";
+    string token = "";
+    try
+    {
+         token = context.Request.Headers.Authorization[0].Replace("Bearer ", "");
+    }
+    catch (Exception ex) { }
+    if (!string.IsNullOrEmpty(token))
+    {
+        try
+        {
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            SharedIds.UserId = Convert.ToInt32(jwt.Claims.First(c => c.Type == "Id").Value);
+            SharedIds.CustomerId = Convert.ToInt32(jwt.Claims.First(c => c.Type == "CustomerId").Value);
+        }
+        catch (Exception ex) 
+        { 
+
+        }
+        
+        
+    }
     await next.Invoke();
     // Do logging or other work that doesn't write to the Response.
 });

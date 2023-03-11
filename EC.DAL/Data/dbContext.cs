@@ -37,8 +37,7 @@ namespace CV.DAL.Data
         DbSet<Category> category { get; set; }
         DbSet<Brands> brands { get; set; }
         DbSet<Products> products { get; set; }
-        DbSet<OrderStates> orderStates { get; set; }
-        DbSet<ProductState> productState { get; set; }
+        
         DbSet<Customer> customers { get; set; }
         DbSet<OrderItem> orderItems { get; set; }
         DbSet<Order> orders { get; set; }

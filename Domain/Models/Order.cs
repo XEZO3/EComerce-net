@@ -15,8 +15,8 @@ namespace Domain.Models
         public Customer Customer { get; set; }
         public DateTime OrderDate { get; set; }
         [Column("OrderStatus")]
-        [ForeignKey("OrderState")]
-        public int OrderStateId {get; set; }
+        
+        public string OrderState {get; set; }
         public string CustomerNote { get; set; }
         public List<OrderItem> Items { get; set; }
         [Range(0, 5)]

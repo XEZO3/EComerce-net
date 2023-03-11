@@ -112,8 +112,11 @@ namespace EC.Service.Service
                 UserObj.errorMsg = "Email is already taken";
                 
             }
-            else { 
+            else {
+                
+                
                 Users mapedUser = _mapper.Map<Users>(register);
+                mapedUser.Customer = _mapper.Map<Customer>(register.customer);
                 mapedUser.Password = GeneratePassword(register.Password,salt);
                 mapedUser.salt= salt;
                 await _user.Add(mapedUser);

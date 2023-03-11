@@ -12,9 +12,11 @@ namespace EComerce.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly  ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        private readonly IFileService _fileService;
+        public CategoryController(ICategoryService categoryService, IFileService fileService)
         {
             _categoryService = categoryService;
+            _fileService = fileService;
         }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery]CategoryFilter filter) {
@@ -22,8 +24,10 @@ namespace EComerce.Controllers
             return Ok(data);
         }
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] CategoryDto category)
+        public async Task<IActionResult> Add([FromForm] CategoryDto category)
         {
+            var file = Request.Form.Files;
+            category.Image = _fileService.uploadfile(file);
             var data = await _categoryService.Add(category);
             return Ok(data);
         }

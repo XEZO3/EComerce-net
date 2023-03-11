@@ -1,5 +1,6 @@
 ﻿using Domain.IService;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 
 
@@ -8,8 +9,10 @@ namespace EC.Service.Service
     public class FilesService : IFileService
     {
         private readonly IWebHostEnvironment _hostEnviroment;
-        public FilesService(IWebHostEnvironment hostEnviroment) {
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public FilesService(IWebHostEnvironment hostEnviroment, IHttpContextAccessor _httpContextAccessor) {
             _hostEnviroment = hostEnviroment;
+            httpContextAccessor = _httpContextAccessor;
         }
         public string uploadfile(dynamic file)
         {
@@ -22,7 +25,9 @@ namespace EC.Service.Service
             {
                 file[0].CopyTo(filestrem);
             }
-            return filename + extention;
+            var baseurl = httpContextAccessor.HttpContext.Request.Scheme + "://" + httpContextAccessor.HttpContext.Request.Host + httpContextAccessor.HttpContext.Request.PathBase;
+
+            return Path.Combine(baseurl, "Images",filename+extention);
         }
     }
 }

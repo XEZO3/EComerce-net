@@ -4,6 +4,7 @@ using Domain.Models.Dto;
 using Domain.Models.filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace EComerce.Controllers
 {
@@ -45,12 +46,14 @@ namespace EComerce.Controllers
             return Ok();
         }
         [HttpPost("GetCartItem")]
-        public async Task<IActionResult> GetCartItems([FromBody]List<CartDto> cart) {
-            return Ok(await _productService.GetAll(x=>cart.Select(z=>z.Id).Contains(x.Id)));
+        public async Task<IActionResult> GetCartItems([FromForm]string cart) {
+             List<CartDto> obj = JsonConvert.DeserializeObject<List<CartDto>>(cart);
+            return Ok(await _productService.GetAll(x=> obj.Select(z=>z.Id).Contains(x.Id)));
+           //return Ok(obj);
         }
         [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> DeleteById(int Id) {
             return Ok(await _productService.DeleteById(Id));
-                }
+          }
     }
 }
