@@ -2,6 +2,7 @@
 using Domain.IService;
 using Domain.Models.Dto;
 using Domain.Models.filters;
+using EComerce.ActionFilter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,23 +21,28 @@ namespace EComerce.Controllers
 
         [HttpPost("Add")]
         [Authorize]
+        [ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> Add([FromBody]OrderDto order) {
 
             return Ok(await _orderService.Add(order)); 
         }
         [HttpGet("GetAll")]
         [Authorize]
+        [ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> GetAll([FromQuery] OrderFilter order)
         {
             return Ok(await _orderService.GetAll());
         }
         [HttpGet("GetMyOrders")]
         [Authorize]
+        [ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> GetMyOrders()
         {
             return Ok(await _orderService.GetAll(x=>x.CustomerId==SharedIds.CustomerId));
         }
         [HttpPut("UpdateState/{Id}")]
+        [Authorize]
+        [ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> UpdateState(int Id, [FromForm] string state)
         {
              
