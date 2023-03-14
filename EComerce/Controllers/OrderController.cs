@@ -23,12 +23,12 @@ namespace EComerce.Controllers
         [Authorize]
         [ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> Add([FromBody]OrderDto order) {
-
+            order.OrderDate = DateTime.Now;
             return Ok(await _orderService.Add(order)); 
         }
         [HttpGet("GetAll")]
-        [Authorize]
-        [ServiceFilter(typeof(ValidationFilter))]
+        //[Authorize]
+        //[ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> GetAll([FromQuery] OrderFilter order)
         {
             return Ok(await _orderService.GetAll());

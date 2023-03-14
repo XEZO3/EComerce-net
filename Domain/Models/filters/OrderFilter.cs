@@ -9,12 +9,12 @@ namespace Domain.Models.filters
 {
     public class OrderFilter
     {
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public DateTime? OrderDate { get; set; }
-        public string OrderState { get; set; }
-        public string CustomerNote { get; set; }
+        public string? OrderState { get; set; }
+        public string? CustomerNote { get; set; }
         [Range(0, 5)]
-        public int Rate { get; set; }
-        public decimal Total { get; set; }
+        public int? Rate { get; set; }
+        public decimal? Total { get; set; }
     }
 }

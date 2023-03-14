@@ -60,7 +60,7 @@ namespace EC.Service.Service
         public async Task<ServiceRespone<IEnumerable<Roles>>> GetAll(Expression<Func<Roles, bool>> predicate = null)
         {
             
-           
+          
            RoleList.result = await _Role.GetAll(predicate);
             return RoleList;
            
@@ -90,6 +90,7 @@ namespace EC.Service.Service
                 _rolePermessionRepository.Add(rolesPermission);
                 _unitOfWork.Save();
             }
+           
             
     }
 

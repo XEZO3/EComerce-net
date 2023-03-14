@@ -24,7 +24,7 @@ namespace EComerce.Controllers
             return Ok(await _permessionService.GetAll());
         }
         [HttpPost("Add")]
-        [Authorize(Roles ="SuperAdmin")]
+       // [Authorize(Roles ="SuperAdmin")]
         
         public async Task<IActionResult> Add([FromBody]Permessions permession)
         {
