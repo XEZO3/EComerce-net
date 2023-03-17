@@ -12,5 +12,7 @@ namespace Domain.IService
     public interface IOrderService:IService<Order, Order,OrderDto>
     {
         Task<ServiceRespone<Order>> UpdateState(int Id, string state);
+        dynamic GetLast30Info();
+        dynamic GetLast12MInfo();
     }
 }

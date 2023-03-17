@@ -39,5 +39,23 @@ namespace EC.DAL.Repository
             }
            
         }
+
+        public dynamic GetLast12MInfo()
+        {
+            var nowDay = DateTime.Now;
+            var last30 = DateTime.Now.AddMonths(-12);
+            // var result =  _dbSet.Where(x=>x.OrderDate <= nowDay&& x.OrderDate >= last30).GroupBy(z =>  z.OrderDate).Select(x => new { OrderDate = x.Key,total = x.Sum(z=>z.Total)});
+            var result = _dbSet.Where(x => x.OrderDate <= nowDay && x.OrderDate >= last30).GroupBy(z => new { orderDate = z.OrderDate }).Select(x => new { OrderDate = x.Key.orderDate.Month, total = x.Sum(z => z.Total), count = x.Count() });
+            return result.ToList();
+        }
+
+        public dynamic GetLast30Info()
+        {
+            var nowDay = DateTime.Now;
+            var last30 = DateTime.Now.AddDays(-30);
+            // var result =  _dbSet.Where(x=>x.OrderDate <= nowDay&& x.OrderDate >= last30).GroupBy(z =>  z.OrderDate).Select(x => new { OrderDate = x.Key,total = x.Sum(z=>z.Total)});
+            var result = _dbSet.Where(x => x.OrderDate <= nowDay && x.OrderDate >= last30).GroupBy(z => new { orderDate = z.OrderDate}).Select(x => new { OrderDate = x.Key.orderDate, total = x.Sum(z => z.Total),count = x.Count() });
+            return  result.ToList();
+        }
     }
 }

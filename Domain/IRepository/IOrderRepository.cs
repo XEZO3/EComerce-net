@@ -11,5 +11,8 @@ namespace Domain.IRepository
     public interface IOrderRepository :IReopsitory<Order>
     {
         Task<List<Order>> GetAllInclude(Expression<Func<Order, bool>> predicate = null);
+       dynamic GetLast30Info();
+       dynamic GetLast12MInfo();
+
     }
 }

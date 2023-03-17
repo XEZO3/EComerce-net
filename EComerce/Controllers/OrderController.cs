@@ -48,6 +48,17 @@ namespace EComerce.Controllers
              
             return Ok(await _orderService.UpdateState(Id, state));
         }
+        [HttpGet("GetLast30Info")]
+        public IActionResult GetLast30Info() {
+            return Ok(_orderService.GetLast30Info());
+        
+        }
+        [HttpGet("GetLast12MInfo")]
+        public IActionResult GetLast12MInfo()
+        {
+            return Ok(_orderService.GetLast12MInfo());
+
+        }
 
     }
 }

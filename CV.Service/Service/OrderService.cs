@@ -118,5 +118,15 @@ namespace EC.Service.Service
             _unitOfWork.Save();
             return Order;
         }
+        public dynamic GetLast30Info() {
+           
+        return _orderRepository.GetLast30Info();
+        
+        }
+
+        public dynamic GetLast12MInfo()
+        {
+            return _orderRepository.GetLast12MInfo();
+        }
     }
 }
